@@ -1,19 +1,25 @@
 # frozen_string_literal: true
 
-require 'anyway'
-
 module Amorail
-  # Amorail config contains:
-  # - usermail ("user@gmail.com")
-  # - api_key ("13601bbac84727df")
-  # - api_endpoint ("http://you_company.amocrm.com")
-  # - api_path (default: "/private/api/v2/json/")
-  # - auth_url (default: "/private/api/auth.php?type=json")
-  class Config < Anyway::Config
-    attr_config :usermail,
-                :api_key,
-                :api_endpoint,
-                api_path: "/private/api/v2/json/",
-                auth_url: "/private/api/auth.php?type=json"
+  class Config
+    def usermail
+      Rails.application.credentials.amorail[:usermail]
+    end
+
+    def api_key
+      Rails.application.credentials.amorail[:api_key]
+    end
+
+    def api_endpoint
+      Rails.application.credentials.amorail[:api_endpoint]
+    end
+
+    def api_path
+      "/private/api/v2/json/"
+    end
+
+    def auth_url
+      "/private/api/auth.php?type=json"
+    end
   end
 end
